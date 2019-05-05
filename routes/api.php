@@ -25,7 +25,7 @@ Route::group(['namespace'=>'Api'],function () {
     });
 
     Route::group(['middleware'=>'auth:api'],function(){
-        Rote::group(['namespace'=>'Access'],function(){
+        Route::group(['namespace'=>'Access'],function(){
             Route::get('user', 'UserController@user');
         });
     });
