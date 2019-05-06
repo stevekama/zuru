@@ -20,13 +20,11 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validate($request,[
-
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed',
-            'name'=>'required|string|max:255'
+            'name'=>'required|string|max:255',
+            'login_mode'=>'required'
         ]);
-// $user->status=true;
-//        $user->confirmed=true;
 
         //register the user
         $user=User::create([
@@ -35,6 +33,7 @@ class RegisterController extends Controller
             'password'=>bcrypt(request('password')),
             'name'=>request('name'),
             'level'=>0,
+            'login_mode'=>request('login_mode'),
         ]);
 
         $params=[
