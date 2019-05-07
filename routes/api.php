@@ -34,8 +34,26 @@ Route::group(['namespace'=>'Api'],function () {
         });
 
         Route::group(['namespace'=>'Commerce'],function(){
+
+            #Create or retrieve vendor
             Route::get('vendor', 'ShopsController@getVendors');
             Route::post('vendor', 'ShopsController@createVendor');
+
+            #create or retrieve rider
+
+            #create or update customer
+
+            #Endpoint to get all shops
+            Route::get('shops', 'ShopsController@getShops');
+
+            #Return all categories
+            Route::get('vendor_categories', 'ShopsController@getVendorCategories');
+
+            #products create or update
+            Route::get('product/{product}', 'ProductsController@fetch');
+            Route::get('shop_products/{vendor}', 'ProductsController@shopProducts');
+            Route::post('product', 'ProductsController@store');
+
         });
 
     });
