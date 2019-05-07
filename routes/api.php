@@ -24,9 +24,19 @@ Route::group(['namespace'=>'Api'],function () {
         Route::post('register', 'RegisterController@register');
     });
 
+    /*
+     * Authenticated routes
+     */
     Route::group(['middleware'=>'auth:api'],function(){
+
         Route::group(['namespace'=>'Access'],function(){
             Route::get('user', 'UsersController@user');
         });
+
+        Route::group(['namespace'=>'Commerce'],function(){
+            Route::get('vendor', 'ShopsController@getVendors');
+            Route::post('vendor', 'ShopsController@createVendor');
+        });
+
     });
 });
