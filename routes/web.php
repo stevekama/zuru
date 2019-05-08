@@ -17,4 +17,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('to_admin');
+
+Route::group(['namespace'=>'Backend','prefix'=>'administration','as'=>'backend.','middleware'=>'admin'],function (){
+   Route::get('/','HomeController@index')->name('home');
+
+   #Group all users routes
+   Route::group([],function (){
+       Route::get('users/{login_mode}','UsersController@list')->name('users');
+   });
+
+   #Group all sales routes
+
+});
