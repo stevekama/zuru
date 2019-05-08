@@ -36,7 +36,7 @@ Route::group(['namespace'=>'Api'],function () {
         Route::group(['namespace'=>'Commerce'],function(){
 
             #Create or retrieve vendor
-            Route::get('vendor', 'ShopsController@getVendors');
+            Route::get('vendor/{vendor}', 'ShopsController@getVendors');
             Route::post('vendor', 'ShopsController@createVendor');
 
             #create or retrieve rider

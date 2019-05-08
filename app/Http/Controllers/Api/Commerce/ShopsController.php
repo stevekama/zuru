@@ -35,10 +35,9 @@ class ShopsController extends Controller
 
     }
 
-    public function getVendors()
+    public function getVendors(Vendor $vendor)
     {
-        $vendors = Vendor::all();
-        return response()->json($vendors);
+        return response()->json($vendor);
     }
 
 
