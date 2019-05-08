@@ -40,6 +40,11 @@ class ShopsController extends Controller
         return response()->json($vendor);
     }
 
+    public function getSelfVendors()
+    {
+        return response()->json(Auth::user()->vendor);
+
+    }
 
     public function getVendorCategories()
     {
