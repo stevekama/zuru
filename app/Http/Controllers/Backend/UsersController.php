@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 
 class UsersController extends Controller
@@ -21,5 +22,11 @@ class UsersController extends Controller
     {
         $users = User::where([['user_type',0]])->get();
         return View::make('backend.users.admins')->withUsers($users);
+    }
+
+    public function vendorInformation(User $user)
+    {
+        Session::flash('_old_input',$user->vendor);
+        return back();
     }
 }

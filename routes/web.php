@@ -26,6 +26,7 @@ Route::group(['namespace'=>'Backend','prefix'=>'administration','as'=>'backend.'
    Route::group([],function (){
        Route::get('users/{login_mode}','UsersController@list')->name('users');
        Route::get('administrators','UsersController@admins')->name('users.admins');
+       Route::get('vendor_information/{user}','UsersController@vendorInformation')->name('users.vendor_information');
    });
 
    #Group all vendor categories routes

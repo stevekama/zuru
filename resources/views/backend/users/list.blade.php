@@ -20,6 +20,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Login mode</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -37,10 +38,28 @@
                                         <span class="label label-default">rider</span>
                                     @endif
                                 </td>
+                                <td>
+                                    @if($user->login_mode ==1)
+                                        <a  href="{{route('backend.users.vendor_information',$user->id)}}" class="label label-success">shop</a>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="box">
+                <div class="box-header">
+                    <div class="box-title">Vendor information</div>
+                </div>
+                <div class="box-body">
+
                 </div>
             </div>
         </div>
