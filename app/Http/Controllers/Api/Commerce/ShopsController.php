@@ -63,4 +63,9 @@ class ShopsController extends Controller
         return response()->json($data);
         
     }
+
+    public function getCategoryShops(VendorCategory $category)
+    {
+        return json_encode($category->vendors);
+    }
 }

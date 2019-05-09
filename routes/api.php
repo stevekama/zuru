@@ -46,6 +46,7 @@ Route::group(['namespace'=>'Api'],function () {
 
             #Endpoint to get all shops
             Route::get('shops', 'ShopsController@getShops');
+            Route::get('shops/{category}', 'ShopsController@getCategoryShops');
 
             #Return all categories
             Route::get('vendor_categories', 'ShopsController@getVendorCategories');

@@ -19,14 +19,19 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('to_admin');
 
-Route::group(['namespace'=>'Backend','prefix'=>'administration','as'=>'backend.','middleware'=>'admin'],function (){
+Route::group(['namespace'=>'Backend','prefix'=>'administration','as'=>'backend.','middleware'=>['auth','admin']],function (){
    Route::get('/','HomeController@index')->name('home');
 
    #Group all users routes
    Route::group([],function (){
        Route::get('users/{login_mode}','UsersController@list')->name('users');
+       Route::get('administrators','UsersController@admins')->name('users.admins');
    });
 
-   #Group all sales routes
+   #Group all vendor categories routes
+    Route::group(['as'=>'vendor_categories.'],function (){
+        Route::get('list','VendorCategoriesController@list')->name('list');
+        Route::get('edit/{category}','VendorCategoriesController@edit')->name('edit');
+    });
 
 });
