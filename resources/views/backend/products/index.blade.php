@@ -1,7 +1,7 @@
 @extends('backend.layouts.admin')
 
 @section('bread')
-    Vendor categories
+    Products
 @endsection
 
 @section('content')
@@ -10,9 +10,9 @@
         <div class="col-sm-12">
             <div class="box box-primary">
                 <div class="box-header">
-                    <h3 class="box-title">Vendor categories list</h3>
+                    <h3 class="box-title">Products</h3>
                     <div class="box-tools">
-                        <a href="{{route('backend.vendor_categories.create')}}">create new</a>
+                        <a href="{{route('backend.products.create')}}">create new</a>
                     </div>
                 </div>
                 <div class="box-body">
@@ -20,23 +20,23 @@
                         <thead>
                         <tr>
                             <th>#</th>
+                            <th>Avatar</th>
                             <th>Name</th>
-                            <th>No Vendors</th>
+                            <th>Description</th>
+                            <th>Price</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($categories as $category)
+                        @foreach($items as $product)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{$category->name}}</td>
+                                <td>{{$product->avatar}}</td>
+                                <td>{{$product->name}}</td>
+                                <td>{{$product->description}}</td>
+                                <td>{{$product->price}}</td>
                                 <td>
-                                    <span class="badge bg-info">
-                                        {{$category->vendors()->count()}}
-                                    </span>
-                                </td>
-                                <td>
-                                    <a class="btn btn-primary btn-xs" href="{{route('backend.vendor_categories.edit',$category->id)}}"><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-primary btn-xs" href="{{route('backend.products.edit',$product->id)}}"><i class="fa fa-edit"></i></a>
                                 </td>
 
                             </tr>

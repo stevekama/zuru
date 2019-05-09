@@ -31,7 +31,17 @@ Route::group(['namespace'=>'Backend','prefix'=>'administration','as'=>'backend.'
    #Group all vendor categories routes
     Route::group(['as'=>'vendor_categories.'],function (){
         Route::get('list','VendorCategoriesController@list')->name('list');
+        Route::get('create','VendorCategoriesController@create')->name('create');
+        Route::post('store','VendorCategoriesController@store')->name('store');
         Route::get('edit/{category}','VendorCategoriesController@edit')->name('edit');
+    });
+
+    #Products management routes
+    Route::group(['as'=>'products.','prefix'=>'products'],function(){
+        Route::get('list','ProductsController@list')->name('list');
+        Route::get('create','ProductsController@create')->name('create');
+        Route::post('store','ProductsController@store')->name('store');
+        Route::get('edit/{category}','ProductsController@edit')->name('edit');
     });
 
 });

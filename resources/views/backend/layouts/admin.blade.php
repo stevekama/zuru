@@ -373,7 +373,7 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i>Items</a></li>
+                        <li><a href="{{route('backend.products.list')}}"><i class="fa fa-circle-o"></i>Items</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
