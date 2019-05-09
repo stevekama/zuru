@@ -59,7 +59,7 @@
                     <div class="box-title">Vendor information</div>
                 </div>
                 <div class="box-body">
-
+                    <form action="" ></form>
                 </div>
             </div>
         </div>
