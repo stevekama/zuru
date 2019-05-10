@@ -20,10 +20,17 @@ Route::group(['namespace'=>'Api'],function () {
      * Pre-auth routes
      */
     Route::group(['namespace'=>'Auth'],function (){
-
         Route::post('login', 'LoginController@login');
         Route::post('register', 'RegisterController@register');
 
+    });
+
+    /*
+     * avatar exposes in the system
+     */
+    Route::group(['namespace'=>'Access'],function(){
+        Route::get('product_avatar/{filename}', 'ProductsController@getProductImage');
+        Route::get('vendor_avatar/{filename}', 'ShopsController@getVendorImage');
     });
 
     /*
@@ -49,8 +56,6 @@ Route::group(['namespace'=>'Api'],function () {
             #Endpoint to get all shops
             Route::get('shops', 'ShopsController@getShops');
             Route::get('shops/{category}', 'ShopsController@getCategoryShops');
-            Route::get('vendor_avatar/{filename}', 'ShopsController@getVendorImage');
-
 
             #Return all categories
             Route::get('vendor_categories', 'ShopsController@getVendorCategories');
@@ -60,7 +65,6 @@ Route::group(['namespace'=>'Api'],function () {
             Route::get('shop_products/{vendor}', 'ProductsController@shopProducts');
             Route::post('product', 'ProductsController@store');
             Route::post('product_availability', 'ProductsController@availability');
-            Route::get('product_avatar/{filename}', 'ProductsController@getProductImage');
 
         });
 
