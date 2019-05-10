@@ -62,8 +62,10 @@ class ProductsController extends Controller
 
     public function availability(Request $request)
     {
-       $this->validate($request,
-           ['product_id'=>'required',['is_available'=>'required']]);
+       $this->validate($request, [
+           'product_id'=>'required',
+           'is_available'=>'required'
+       ]);
 
        $vendor_item = VendorItem::find(request('product_id'));
        $vendor_item->is_available = request('is_available');
