@@ -7,6 +7,9 @@ use App\Models\VendorCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Input;
+use Intervention\Image\Facades\Image;
 use Webpatser\Uuid\Uuid;
 
 class ShopsController extends Controller
@@ -28,6 +31,20 @@ class ShopsController extends Controller
          * Create the vendor
          */
         $vendor = $request->all();
+
+        if($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+            #requery vital data for the upload
+            $image = Input::file('avatar');
+            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+            $path = public_path('files/vendors/');
+            #create path if it does not exist and move the trimmed file
+            if (!File::exists($path)) {
+                File::makeDirectory($path, $mode = 0777, true, true);
+            }
+            Image::make($image->getRealPath())->fit(500, 500)->save($path . $filename);
+            $vendor['avatar'] = $filename;
+
+        }
         $vendor['id'] = Uuid::generate();
         $vendor['user_id'] = Auth::id();
         Vendor::createOrUpdateExcept(['user_id'=>Auth::id()],$vendor,['id']);

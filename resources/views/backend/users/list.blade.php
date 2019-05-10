@@ -59,7 +59,26 @@
                     <div class="box-title">Vendor information</div>
                 </div>
                 <div class="box-body">
-                    <form action="" ></form>
+                    <form action="" >
+                        <div class="form-group">
+                            <label for="">Shop name</label>
+                            <input type="text" class="form-control" name="shop_name">
+                            <span class="text-warning">{{($errors->has('shop_name'))?$errors->first('shop_name'):""}}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Description</label>
+                            <input type="text" class="form-control" name="description">
+                            <span class="text-warning">{{($errors->has('description'))?$errors->first('description'):""}}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Category</label>
+                            <input type="text" class="form-control" name="description">
+                            <span class="text-warning">{{($errors->has('description'))?$errors->first('description'):""}}</span>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
