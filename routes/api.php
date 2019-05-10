@@ -28,7 +28,7 @@ Route::group(['namespace'=>'Api'],function () {
     /*
      * avatar exposes in the system
      */
-    Route::group(['namespace'=>'Access'],function(){
+    Route::group(['namespace'=>'Commerce'],function(){
         Route::get('product_avatar/{filename}', 'ProductsController@getProductImage');
         Route::get('vendor_avatar/{filename}', 'ShopsController@getVendorImage');
     });
