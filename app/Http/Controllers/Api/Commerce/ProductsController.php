@@ -59,4 +59,18 @@ class ProductsController extends Controller
         return response()->json($_vendor->products);
 
     }
+
+    public function availability(Request $request)
+    {
+       $this->validate($request,
+           ['product_id'=>'required',['is_available'=>'required']]);
+
+       $vendor_item = VendorItem::find(request('product_id'));
+       $vendor_item->is_available = request('is_available');
+       $vendor_item->save();
+
+       return response()->json(
+           ['success'=>true]
+       );
+    }
 }

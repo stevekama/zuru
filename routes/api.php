@@ -55,6 +55,7 @@ Route::group(['namespace'=>'Api'],function () {
             Route::get('product/{product}', 'ProductsController@fetch');
             Route::get('shop_products/{vendor}', 'ProductsController@shopProducts');
             Route::post('product', 'ProductsController@store');
+            Route::post('product/availability', 'ProductsController@availability');
 
         });
 
