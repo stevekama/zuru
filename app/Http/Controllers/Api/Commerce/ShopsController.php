@@ -16,6 +16,12 @@ class ShopsController extends Controller
 {
     //
 
+    public function getVendorImage($filename)
+    {
+        $path = public_path('files/vendors/' . $filename);
+        return \response()->download($path);
+    }
+
     public function createVendor(Request $request)
     {
         $this->validate($request,[

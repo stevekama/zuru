@@ -15,6 +15,13 @@ class ProductsController extends Controller
 {
     //
 
+    public function getProductImage($filename)
+    {
+        $path = public_path('files/items/' . $filename);
+        return \response()->download($path);
+    }
+
+
     public function store(Request $request)
     {
         $this->validate($request,[

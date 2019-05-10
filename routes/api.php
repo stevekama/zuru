@@ -22,6 +22,10 @@ Route::group(['namespace'=>'Api'],function () {
     Route::group(['namespace'=>'Auth'],function (){
         Route::post('login', 'LoginController@login');
         Route::post('register', 'RegisterController@register');
+
+        Route::get('product_avatar/{filename}', 'ProductsController@getProductImage');
+        Route::get('vendor_avatar/{filename}', 'ShopsController@getVendorImage');
+
     });
 
     /*
