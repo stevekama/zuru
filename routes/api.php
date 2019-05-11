@@ -66,6 +66,10 @@ Route::group(['namespace'=>'Api'],function () {
             Route::post('product', 'ProductsController@store');
             Route::post('product_availability', 'ProductsController@availability');
 
+            #create order endpoint
+            Route::post('order', 'OrdersController@store');
+
+
         });
 
     });

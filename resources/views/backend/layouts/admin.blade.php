@@ -347,6 +347,19 @@
                         <li><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard</a></li>
                     </ul>
                 </li>
+
+                <li class="treeview menu-open">
+                    <a href="#">
+                        <i class="fa fa-key"></i> <span>Roles</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{route('backend.roles.list')}}"><i class="fa fa-circle-o"></i> Roles</a></li>
+                    </ul>
+                </li>
+
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-users"></i>

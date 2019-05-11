@@ -45,4 +45,9 @@ Route::group(['namespace'=>'Backend','prefix'=>'administration','as'=>'backend.'
         Route::get('edit/{category}','ProductsController@edit')->name('edit');
     });
 
+    Route::group(['as'=>'roles.','prefix'=>'roles','middleware'=>'permission:read-roles'],function (){
+        Route::get('list','AccessController@list')->name('list');
+
+    });
+
 });
