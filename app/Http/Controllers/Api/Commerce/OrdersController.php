@@ -53,6 +53,27 @@ class OrdersController extends Controller
         return response()->json(Order::where('user_id',Auth::id())->with(['items','items.product'])->get());
     }
 
+    public function vendor()
+    {
+        $vendor = Auth::user()->vendor;
+        $orders = Order::whereHas('items.product',function ($query) use($vendor){
+            $query->where('vendor_id',$vendor->id);
+        })->with(['items','items.product'])->tosql();
+        return $orders;
+
+    }
+
+    public function rider()
+    {
+
+    }
+
+    public function accept()
+    {
+        $rider = Auth::user()->rider;
+
+    }
+
 
     function generateOrderNo(){
         $pin = $this->generatePIN();

@@ -72,6 +72,7 @@ Route::group(['namespace'=>'Api'],function () {
                 Route::get('/customer', 'OrdersController@customer');
                 Route::get('/rider', 'OrdersController@rider');
                 Route::get('/vendor', 'OrdersController@vendor');
+                Route::post('/accept/{order}', 'OrdersController@accept');
             });
 
 

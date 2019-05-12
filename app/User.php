@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Rider;
 use App\Models\Vendor;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -44,5 +45,10 @@ class User extends Authenticatable
     public function vendor()
     {
         return $this->hasOne(Vendor::class,'user_id','id');
+    }
+
+    public function rider()
+    {
+        return $this->hasOne(Rider::class,'user_id','id');
     }
 }
