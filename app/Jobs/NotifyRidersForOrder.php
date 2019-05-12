@@ -2,11 +2,14 @@
 
 namespace App\Jobs;
 
+use App\Helpers\OneSignalHelper;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 
 class NotifyRidersForOrder implements ShouldQueue
 {
@@ -32,5 +35,23 @@ class NotifyRidersForOrder implements ShouldQueue
     public function handle()
     {
 
+        /*
+         * create tags
+         * "field": "tag", "key": "level", "relation": ">", "value": "10""operator": "OR"
+         */
+        $tags =[];
+        $users = User::all();
+        $helper = new OneSignalHelper();
+
+        foreach ($users as $key=>$user){
+            $tags[] = ["field"=>"tag","key"=>"user","relation"=>"exists"];
+            $tags[] = ["operator"=>"AND"];
+            $tags[] = ["field"=>"tag","key"=> "user","relation"=> "=","value"=>$user->id];
+            if($key!=count($users)-1)
+                $tags[] = ["operator"=>"OR"];
+
+        }
+
+        Log::info($helper->sendMessage(["foo"=>"bar"],$tags));
     }
 }

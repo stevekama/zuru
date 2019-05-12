@@ -43,6 +43,8 @@ class OrdersController extends Controller
             OrderItems::create($order_item);
         }
 
+        $order = Order::first();
+
         $this->dispatch(new NotifyRidersForOrder($order));
 
         return response()->json([

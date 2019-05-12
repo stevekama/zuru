@@ -29,7 +29,7 @@ class ProductsController extends Controller
             'name'=>'required',
             'description'=>'required',
             'price'=>'numeric|required',
-            'id'=>'nullable|exists:vendor_items'
+            'id'=>'sometimes|exists:vendor_items'
         ]);
 
         $data = $request->all();
