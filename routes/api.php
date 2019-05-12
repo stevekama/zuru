@@ -68,6 +68,11 @@ Route::group(['namespace'=>'Api'],function () {
 
             #create order endpoint
             Route::post('order', 'OrdersController@store');
+            Route::group(['prefix'=>'orders'],function(){
+                Route::get('/customer', 'OrdersController@customer');
+                Route::get('/rider', 'OrdersController@rider');
+                Route::get('/vendor', 'OrdersController@vendor');
+            });
 
 
         });

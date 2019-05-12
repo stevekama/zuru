@@ -8,4 +8,9 @@ class OrderItems extends Model
 {
     //
     protected $guarded =[];
+
+    public function product()
+    {
+        return $this->hasOne(VendorItem::class,'id','product_id');
+    }
 }

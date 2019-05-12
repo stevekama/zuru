@@ -48,6 +48,12 @@ class OrdersController extends Controller
     }
 
 
+    public function customer()
+    {
+        return response()->json(Order::where('user_id',Auth::id())->with(['items','items.product'])->get());
+    }
+
+
     function generateOrderNo(){
         $pin = $this->generatePIN();
         $validator=Validator::make(['order_no'=>$pin],['order_no'=>'unique:orders,order_no']);
