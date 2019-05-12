@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class RiderOrder extends Model
 {
     //
+    protected $guarded = [];
 }

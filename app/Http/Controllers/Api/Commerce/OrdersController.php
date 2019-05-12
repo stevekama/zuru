@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api\Commerce;
 use App\Jobs\NotifyRidersForOrder;
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\Rider;
+use App\Models\RiderOrder;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -58,19 +61,35 @@ class OrdersController extends Controller
         $vendor = Auth::user()->vendor;
         $orders = Order::whereHas('items.product',function ($query) use($vendor){
             $query->where('vendor_id',$vendor->id);
-        })->with(['items','items.product'])->tosql();
+        })->with(['items','items.product'])->get();
         return $orders;
 
     }
 
     public function rider()
     {
-
+        $orders = Order::join('rider_orders','orders.id','=','rider_orders.order_id')->get();
+        return response()->json($orders);
     }
 
-    public function accept()
+    public function accept(Order $order)
     {
         $rider = Auth::user()->rider;
+        if($rider==null){
+            $_rider=['user_id'=>Auth::id(),'id'=>Uuid::generate()];
+            Rider::createOrUpdateExcept(['user_id'=>Auth::id()],$_rider,['id']);
+            $rider = Auth::user()->rider;
+        }
+
+        /*
+         *create an rider order
+         */
+        if(RiderOrder::where('order_id',$order->id)->first()==null)
+            RiderOrder::create(['order_id'=>$order->id,'rider_id'=>$rider->id]);
+
+        return response()->json([
+            'success'=>true
+        ]);
 
     }
 
