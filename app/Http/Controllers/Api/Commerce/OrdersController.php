@@ -76,7 +76,7 @@ class OrdersController extends Controller
             ->select('orders.*')
             ->with(['items'=>function($query){
                 $query->with(['product'=>function($query){
-
+                        $query->withTrashed();
                 }]);
             }])
             ->get();

@@ -21,9 +21,9 @@ class CustomerController extends Controller
         /*
          * create customer record
          */
+
         $rider = ["user_id"=>Auth::id(),"id"=>Uuid::generate()];
         Customer::createOrUpdateExcept(['user_id'=>Auth::id()],$rider,['id']);
-
 
         return response()->json($user->customer);
     }
