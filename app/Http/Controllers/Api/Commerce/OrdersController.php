@@ -71,6 +71,7 @@ class OrdersController extends Controller
     public function rider()
     {
         $orders = Order::join('rider_orders','orders.id','=','rider_orders.order_id')
+            ->select('orders.*')
             ->with(['items','items.product'])
             ->get();
         return response()->json($orders);
