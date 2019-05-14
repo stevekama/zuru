@@ -83,4 +83,17 @@ class ProductsController extends Controller
            ['success'=>true]
        );
     }
+
+    public function deleteProduct(Request $request)
+    {
+        $this->validate($request, [
+            'product_id'=>'required',
+        ]);
+
+        $vendor_item = VendorItem::find(request('product_id'));
+        $vendor_item->delete();
+        return response()->json(
+            ['success'=>true]
+        );
+    }
 }

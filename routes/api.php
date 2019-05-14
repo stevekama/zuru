@@ -50,8 +50,11 @@ Route::group(['namespace'=>'Api'],function () {
             Route::post('vendor', 'ShopsController@createVendor');
 
             #create or retrieve rider
+            Route::get('self_rider', 'RiderController@getSelfRider');
+            Route::post('rider', 'RiderController@storeRider');
 
             #create or update customer
+            Route::get('self_customer', 'CustomerController@getSelfCustomer');
 
             #Endpoint to get all shops
             Route::get('shops', 'ShopsController@getShops');
@@ -65,6 +68,7 @@ Route::group(['namespace'=>'Api'],function () {
             Route::get('shop_products/{vendor}', 'ProductsController@shopProducts');
             Route::post('product', 'ProductsController@store');
             Route::post('product_availability', 'ProductsController@availability');
+            Route::post('delete_product', 'ProductsController@deleteProduct');
 
             #create order endpoint
             Route::post('order', 'OrdersController@store');

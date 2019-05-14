@@ -8,6 +8,7 @@ use App\Models\OrderItems;
 use App\Models\Rider;
 use App\Models\RiderOrder;
 use App\Models\Vendor;
+use function foo\func;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -71,9 +72,15 @@ class OrdersController extends Controller
     public function rider()
     {
         $orders = Order::join('rider_orders','orders.id','=','rider_orders.order_id')
+
             ->select('orders.*')
-            ->with(['items','items.product'])
+            ->with(['items'=>function($query){
+                $query->with(['product'=>function($query){
+
+                }]);
+            }])
             ->get();
+
         return response()->json($orders);
     }
 

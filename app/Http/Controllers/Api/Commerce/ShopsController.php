@@ -65,6 +65,9 @@ class ShopsController extends Controller
 
     public function getSelfVendors()
     {
+        $user = Auth::user();
+        $user->login_mode = 1;
+        $user->save();
         return response()->json(Auth::user()->vendor);
 
     }

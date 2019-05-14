@@ -47,6 +47,11 @@ Route::group(['namespace'=>'Backend','prefix'=>'administration','as'=>'backend.'
 
     Route::group(['as'=>'roles.','prefix'=>'roles','middleware'=>'permission:read-roles'],function (){
         Route::get('list','AccessController@list')->name('list');
+        Route::get('create','AccessController@creteRole')->name('create');
+        Route::get('edit/{role}','AccessController@editRole')->name('edit');
+        Route::get('permissions/{role}','AccessController@assignForm')->name('permissions');
+        Route::post('store','AccessController@storeRole')->name('store');
+        Route::post('store_assign','AccessController@storeAssign')->name('store_assign');
 
     });
 
