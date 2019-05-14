@@ -56,7 +56,11 @@ class OrdersController extends Controller
 
     public function customer()
     {
-        return response()->json(Order::where('user_id',Auth::id())->with(['items','items.product'])->get());
+        return response()->json(Order::where('user_id',Auth::id())->with(['items'])
+            ->with(['items.product'=>function($query){
+                $query->withTrashed();
+            }])
+            ->get());
     }
 
     public function vendor()
