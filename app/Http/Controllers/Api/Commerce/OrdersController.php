@@ -64,7 +64,9 @@ class OrdersController extends Controller
         $vendor = Auth::user()->vendor;
         $orders = Order::whereHas('items.product',function ($query) use($vendor){
             $query->where('vendor_id',$vendor->id);
-        })->with(['items','items.product'])->get();
+        })->with('items')->with(['items.product'=>function($query){
+            $query->withTrashed();
+        }])->get();
         return $orders;
 
     }
