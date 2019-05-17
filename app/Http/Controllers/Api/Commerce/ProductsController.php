@@ -35,7 +35,10 @@ class ProductsController extends Controller
         $data = $request->all();
         $vendor = Auth::user()->vendor;
         if($vendor==null){
-            return response()->json(['success'=>false,'message'=>"User does not have vendor privileges"]);
+            return response()->json([
+                'success'=>false,
+                'message'=>"User does not have vendor privileges"
+            ],422);
         }
         $data['vendor_id']=$vendor->id;
 
