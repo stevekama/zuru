@@ -105,10 +105,22 @@ class OrdersController extends Controller
         if(RiderOrder::where('order_id',$order->id)->first()==null)
             RiderOrder::create(['order_id'=>$order->id,'rider_id'=>$rider->id]);
 
+        $order->status=1;
+        $order->save();
+
         return response()->json([
             'success'=>true
         ]);
 
+    }
+
+    public function acceptCustomer(Order $order)
+    {
+        $order->status=2;
+        $order->save();
+        return response()->json([
+            'success'=>true
+        ]);
     }
 
 
