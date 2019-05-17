@@ -11,6 +11,8 @@ class Customer extends Model
     use CreateOrUpdateExcept;
 
     protected $guarded = [];
+    public $incrementing = false;
+
 
     public function customer()
     {

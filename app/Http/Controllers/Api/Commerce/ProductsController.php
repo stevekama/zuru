@@ -6,6 +6,7 @@ use App\Models\Vendor;
 use App\Models\VendorItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
@@ -25,7 +26,6 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'vendor_id'=>'required|exists:vendors,id',
             'name'=>'required',
             'description'=>'required',
             'price'=>'numeric|required',
@@ -33,6 +33,11 @@ class ProductsController extends Controller
         ]);
 
         $data = $request->all();
+        $vendor = Auth::user()->vendor;
+        if($vendor==null){
+            return response()->json(['success'=>false,'message'=>"User does not have vendor privileges"]);
+        }
+        $data['vendor_id']=$vendor->id;
 
 
         if($request->hasFile('avatar') && $request->file('avatar')->isValid()) {

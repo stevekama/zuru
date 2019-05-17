@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Customer;
 use App\Models\Rider;
 use App\Models\Vendor;
 use Illuminate\Notifications\Notifiable;
@@ -50,5 +51,11 @@ class User extends Authenticatable
     public function rider()
     {
         return $this->hasOne(Rider::class,'user_id','id');
+    }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class,'user_id','id');
+
     }
 }
