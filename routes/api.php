@@ -81,6 +81,8 @@ Route::group(['namespace'=>'Api'],function () {
 
             });
 
+            Route::get('account', 'AccountController@getUserAccount');
+
 
         });
 
