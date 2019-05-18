@@ -56,6 +56,9 @@ class OrdersController extends Controller
     public function rate(Order $order,Request $request){
 
         Log::warning($request->getContent());
+        return response()->json([
+            'success'=>true
+        ]);
 
     }
 
