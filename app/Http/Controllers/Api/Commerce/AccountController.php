@@ -20,11 +20,9 @@ class AccountController extends Controller
             $this->createUserAccount($user);
         }
 
-        $user->load('account');
+        $user->load('account.transactions');
 
-        return response()->json([
-            'user'=>$user,
-        ]);
+        return response()->json($user);
     }
 
     function generateRandom($digits = 4){

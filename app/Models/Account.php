@@ -9,4 +9,9 @@ class Account extends Model
     //
     public $incrementing = false;
 
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class,'account_id','id');
+    }
+
 }

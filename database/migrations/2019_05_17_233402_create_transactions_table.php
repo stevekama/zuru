@@ -14,7 +14,10 @@ class CreateTransactionsTable extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->string('id')->primary();
+            $table->string('account_id');
+            $table->double('amount');
+            $table->integer('type')->default(0); //0 deposit
             $table->timestamps();
         });
     }
