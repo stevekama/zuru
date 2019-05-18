@@ -53,6 +53,11 @@ class OrdersController extends Controller
         ]);
     }
 
+    public function rate(Order $order,Request $request){
+
+        Log::warning($request->getContent());
+
+    }
 
     public function customer()
     {
