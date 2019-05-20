@@ -8,6 +8,7 @@ use App\Models\OrderItems;
 use App\Models\Rider;
 use App\Models\RiderOrder;
 use App\Models\Vendor;
+use App\Models\VendorItem;
 use function foo\func;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -56,6 +57,25 @@ class OrdersController extends Controller
     public function rate(Order $order,Request $request){
 
         Log::warning($request->getContent());
+        $data = json_decode($request->getContent());
+
+        /*
+         * update products for their ratings
+         */
+        foreach ($data->ratings as $order_rating){
+            $product = VendorItem::find($order_rating->item_id);
+            $new_rating = ($product->rating+$order_rating->rating)/2;
+            $product->rating = $new_rating;
+            $product->save();
+        }
+
+        $ride = $order->rides()->orderBy('created_at', 'desc')->first();
+        if($ride!=null){
+            $rider = $ride->rider;
+            $r = ($rider->rating+$data->rider_rating)/2;
+            $rider->rating = $r;
+        }
+
         return response()->json([
             'success'=>true
         ]);
