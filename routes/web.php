@@ -46,6 +46,14 @@ Route::group(['namespace'=>'Backend','prefix'=>'administration','as'=>'backend.'
         Route::get('edit/{category}','ProductsController@edit')->name('edit');
     });
 
+    #Rider modes management routes
+    Route::group(['as'=>'rider_modes.','prefix'=>'rider_modes'],function(){
+        Route::get('list','RiderModesController@list')->name('list');
+        Route::get('create','RiderModesController@create')->name('create');
+        Route::post('store','RiderModesController@store')->name('store');
+        Route::get('edit/{riderModes}','RiderModesController@edit')->name('edit');
+    });
+
     Route::group(['as'=>'roles.','prefix'=>'roles','middleware'=>'permission:read-roles'],function (){
         Route::get('list','AccessController@list')->name('list');
         Route::get('create','AccessController@creteRole')->name('create');

@@ -67,7 +67,6 @@ class ProductsController extends Controller
 
         return redirect()->route('backend.products.list');
 
-
     }
 
     public function edit(VendorItem $item)

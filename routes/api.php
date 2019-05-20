@@ -40,6 +40,7 @@ Route::group(['namespace'=>'Api'],function () {
 
         Route::group(['namespace'=>'Access'],function(){
             Route::get('user', 'UsersController@user');
+            Route::post('user', 'UsersController@updateUser');
         });
 
         Route::group(['namespace'=>'Commerce'],function(){
@@ -52,6 +53,7 @@ Route::group(['namespace'=>'Api'],function () {
             #create or retrieve rider
             Route::get('self_rider', 'RiderController@getSelfRider');
             Route::post('rider', 'RiderController@storeRider');
+            Route::get('rider_modes', 'RiderController@riderModes');
 
             #create or update customer
             Route::get('self_customer', 'CustomerController@getSelfCustomer');
@@ -79,7 +81,6 @@ Route::group(['namespace'=>'Api'],function () {
                 Route::post('/accept/{order}', 'OrdersController@accept');
                 Route::post('/rate/{order}', 'OrdersController@rate');
                 Route::post('/accept_customer/{order}', 'OrdersController@acceptCustomer');
-
             });
 
             Route::get('account', 'AccountController@getUserAccount');

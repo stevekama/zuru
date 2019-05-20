@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Api\Commerce;
 
 use App\Models\Rider;
+use App\Models\RiderModes;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Input;
+use Intervention\Image\Facades\Image;
 use Webpatser\Uuid\Uuid;
 
 class RiderController extends Controller
@@ -29,10 +33,31 @@ class RiderController extends Controller
         $rider = $request->all();
         $rider['id'] = Uuid::generate();
         $rider['user_id'] = Auth::id();
+        $rider['mode_id'] = request('mode_id');
+
+        if($request->hasFile('license') && $request->file('license')->isValid()) {
+            #requery vital data for the upload
+            $image = Input::file('license');
+            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+            $path = public_path('files/riders/license/');
+            #create path if it does not exist and move the trimmed file
+            if (!File::exists($path)) {
+                File::makeDirectory($path, $mode = 0777, true, true);
+            }
+            Image::make($image->getRealPath())->fit(500, 500)->save($path . $filename);
+            $rider['license'] = $filename;
+
+        }
+
         Rider::createOrUpdateExcept(['user_id'=>Auth::id()],$rider,['id']);
 
         return response()->json([
             'success'=>true
         ]);
+    }
+
+    public function riderModes()
+    {
+        return response()->json(RiderModes::all());
     }
 }
