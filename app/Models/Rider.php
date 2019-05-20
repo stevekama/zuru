@@ -19,4 +19,14 @@ class Rider extends Model
     {
         return $this->hasOne(User::class,'id','user_id');
     }
+
+
+    public function scopeCloseTo($query, $location, $radius = 25)
+    {
+        $haversine = "(6371 * acos(cos(radians($location->latitude)) * cos(radians(latitude)) * cos(radians(longitude) - radians($location->longitude)) + sin(radians($location->latitude)) * sin(radians(latitude))))";
+        return $query
+            ->select(['id'])
+            ->selectRaw("{$haversine} AS distance")
+            ->whereRaw("{$haversine} < ?", [$radius]);
+    }
 }

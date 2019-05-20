@@ -60,6 +60,9 @@ class ProductsController extends Controller
         $product->price = request('price');
         $product->vendor_id = request('vendor_id');
         $product->description = request('description');
+        $product->packaging_cost = request('packaging_cost');
+        $product->previous_price = request('previous_price');
+        $product->is_on_offer = request('is_on_offer');
         $product->save();
 
         return redirect()->route('backend.products.list');
