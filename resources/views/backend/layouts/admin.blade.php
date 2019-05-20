@@ -397,9 +397,9 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i>In progress</a></li>
-                        <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i>Completed</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Canceled</a></li>
+                        <li><a href="{{route('backend.orders.list',0)}}"><i class="fa fa-circle-o"></i>In progress</a></li>
+                        <li><a href="{{route('backend.orders.list',1)}}"><i class="fa fa-circle-o"></i>Completed</a></li>
+                        <li><a href="{{route('backend.orders.list',2)}}"><i class="fa fa-circle-o"></i> Canceled</a></li>
                     </ul>
                 </li>
                 <li class="treeview">

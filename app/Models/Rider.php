@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\CreateOrUpdateExcept;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Rider extends Model
@@ -13,4 +14,9 @@ class Rider extends Model
     public $incrementing = false;
 
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->hasOne(User::class,'id','user_id');
+    }
 }

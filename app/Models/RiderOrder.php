@@ -8,4 +8,9 @@ class RiderOrder extends Model
 {
     //
     protected $guarded = [];
+
+    public function rider()
+    {
+        return $this->hasOne(Rider::class,'id','rider_id');
+    }
 }

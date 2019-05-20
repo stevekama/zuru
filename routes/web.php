@@ -55,4 +55,10 @@ Route::group(['namespace'=>'Backend','prefix'=>'administration','as'=>'backend.'
 
     });
 
+    #Orders management routes
+    Route::group(['as'=>'orders.','prefix'=>'orders'],function() {
+        Route::get('list/{status}', 'OrdersController@index')->name('list');
+        Route::get('view/{order}', 'OrdersController@view')->name('view');
+    });
+
 });
