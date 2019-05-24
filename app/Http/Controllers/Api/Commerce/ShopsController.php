@@ -22,6 +22,12 @@ class ShopsController extends Controller
         return \response()->download($path);
     }
 
+    public function getUserImage($filename)
+    {
+        $path = public_path('files/users/' . $filename);
+        return \response()->download($path);
+    }
+
     public function createVendor(Request $request)
     {
         $this->validate($request,[

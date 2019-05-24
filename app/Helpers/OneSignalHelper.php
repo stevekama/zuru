@@ -6,16 +6,22 @@ namespace App\Helpers;
 
 class OneSignalHelper
 {
-    function sendMessage($data,$filters){
+    function sendMessage($data,$filters,$title,$message){
+        $heading = array(
+            "en" => $title
+        );
         $content = array(
-            "en" => 'English Message'
+            "en" => $message
         );
 
         $fields = array(
             'app_id' => "83c1b15c-88b5-44f7-ad68-c6aaf593d5ac",
             'filters' => $filters,
             'data' => $data,
-            'contents' => $content
+            'contents' => $content,
+            'android_group' => "zuru",
+            'headings' => $heading
+
         );
 
         $fields = json_encode($fields);

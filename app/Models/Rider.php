@@ -29,4 +29,9 @@ class Rider extends Model
             ->selectRaw("{$haversine} AS distance")
             ->whereRaw("{$haversine} < ?", [$radius]);
     }
+
+    public function rides()
+    {
+        return $this->hasMany(RiderOrder::class,'rider_id','id');
+    }
 }

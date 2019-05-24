@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Helpers\OneSignalHelper;
+use App\Models\Order;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -52,6 +53,11 @@ class NotifyRidersForOrder implements ShouldQueue
 
         }
 
-        Log::info($helper->sendMessage(["foo"=>"bar"],$tags));
+        $order=Order::find($this->order->id);
+        $vendors=$order->vendors();
+
+        $this->order->vendors=$vendors;
+
+        Log::info($helper->sendMessage($this->order,$tags,"Zuru orders","An order is ready for pick up"));
     }
 }

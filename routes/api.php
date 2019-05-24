@@ -22,7 +22,6 @@ Route::group(['namespace'=>'Api'],function () {
     Route::group(['namespace'=>'Auth'],function (){
         Route::post('login', 'LoginController@login');
         Route::post('register', 'RegisterController@register');
-
     });
 
     /*
@@ -31,6 +30,7 @@ Route::group(['namespace'=>'Api'],function () {
     Route::group(['namespace'=>'Commerce'],function(){
         Route::get('product_avatar/{filename}', 'ProductsController@getProductImage');
         Route::get('vendor_avatar/{filename}', 'ShopsController@getVendorImage');
+        Route::get('user_avatar/{filename}', 'ShopsController@getUserImage');
     });
 
     /*
@@ -54,6 +54,7 @@ Route::group(['namespace'=>'Api'],function () {
             Route::get('self_rider', 'RiderController@getSelfRider');
             Route::post('rider', 'RiderController@storeRider');
             Route::get('rider_modes', 'RiderController@riderModes');
+            Route::get('user_rider', 'RiderController@getUserRider');
 
             #create or update customer
             Route::get('self_customer', 'CustomerController@getSelfCustomer');
@@ -76,6 +77,7 @@ Route::group(['namespace'=>'Api'],function () {
             Route::post('order', 'OrdersController@store');
             Route::group(['prefix'=>'orders'],function(){
                 Route::get('/customer', 'OrdersController@customer');
+                Route::post('/calculate_price', 'OrdersController@calculatePrice');
                 Route::get('/rider', 'OrdersController@rider');
                 Route::get('/vendor', 'OrdersController@vendor');
                 Route::post('/accept/{order}', 'OrdersController@accept');

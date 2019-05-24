@@ -24,6 +24,14 @@ class RiderController extends Controller
 
     }
 
+    public function getUserRider()
+    {
+        $user = Auth::user();
+        $user->login_mode = 2;
+        $user->save();
+        return response()->json(['user'=>$user,'rider'=>Rider::where('user_id',$user->id)->withCount('rides')->first()]);
+    }
+
 
     public function storeRider(Request $request)
     {
