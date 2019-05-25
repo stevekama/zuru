@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Commerce;
 
+use App\Models\ResetCode;
 use App\Models\Vendor;
 use App\Models\VendorCategory;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Intervention\Image\Facades\Image;
 use Webpatser\Uuid\Uuid;
 
@@ -19,6 +21,12 @@ class ShopsController extends Controller
     public function getVendorImage($filename)
     {
         $path = public_path('files/vendors/' . $filename);
+        return \response()->download($path);
+    }
+
+    public function getRiderModeAvatar($filename)
+    {
+        $path = public_path('files/rider_modes/' . $filename);
         return \response()->download($path);
     }
 
@@ -83,21 +91,74 @@ class ShopsController extends Controller
         return response()->json(VendorCategory::all());
     }
 
-    public function getShops()
+    public function getShops(Request $request)
     {
 
-        $data = VendorCategory::with(['vendors'=>function($query){
-            /*
-             * check latitude and longitude radius
-             */
-            return $query->limit(5);
-        }])->get();
+        if($request->has('latitude') && $request->input('latitude')!=0){
+            $haversine = "(6371 * acos(cos(radians($request->latitude)) 
+                     * cos(radians(vendors.latitude)) 
+                     * cos(radians(vendors.longitude) 
+                     - radians($request->longitude)) 
+                     + sin(radians($request->latitude)) 
+                     * sin(radians(vendors.latitude))))";
+
+            $data = VendorCategory::get();
+            $data->each(function($user) use ($haversine){
+                $user->load(['topVendors'=>function($query)use ($haversine){
+                    $query->select('vendors.*')->selectRaw("{$haversine} AS distance");
+                }]);
+            });
+        }else{
+            $coordinates =(object)["latitude"=> 0.3461277,"longitude"=>34.4909154];
+            $haversine = "(6371 * acos(cos(radians($coordinates->latitude)) 
+                     * cos(radians(vendors.latitude)) 
+                     * cos(radians(vendors.longitude) 
+                     - radians($coordinates->longitude)) 
+                     + sin(radians($coordinates->latitude)) 
+                     * sin(radians(vendors.latitude))))";
+
+            $data = VendorCategory::get();
+            $data->each(function($user) use ($haversine){
+                $user->load(['topVendors'=>function($query)use ($haversine){
+                    $query->select('vendors.*')->selectRaw("{$haversine} AS distance");
+                }]);
+            });
+        }
+
+
         return response()->json($data);
         
     }
 
-    public function getCategoryShops(VendorCategory $category)
+    public function getCategoryShops(Request $request,VendorCategory $category)
     {
-        return response()->json($category->vendors);
+
+        if($request->has('latitude') && $request->input('latitude')!=0){
+            $haversine = "(6371 * acos(cos(radians($request->latitude)) 
+                     * cos(radians(vendors.latitude)) 
+                     * cos(radians(vendors.longitude) 
+                     - radians($request->longitude)) 
+                     + sin(radians($request->latitude)) 
+                     * sin(radians(vendors.latitude))))";
+
+            $data = Vendor::where('category_id',$category->id)
+                ->select('vendors.*')->selectRaw("{$haversine} AS distance")
+                ->get();
+
+
+        }else{
+            $coordinates =(object)["latitude"=> 0.3461277,"longitude"=>34.4909154];
+            $haversine = "(6371 * acos(cos(radians($coordinates->latitude)) 
+                     * cos(radians(vendors.latitude)) 
+                     * cos(radians(vendors.longitude) 
+                     - radians($coordinates->longitude)) 
+                     + sin(radians($coordinates->latitude)) 
+                     * sin(radians(vendors.latitude))))";
+
+            $data = Vendor::where('category_id',$category->id)
+                ->select('vendors.*')->selectRaw("{$haversine} AS distance")
+                ->get();
+        }
+        return response()->json($data);
     }
 }

@@ -22,6 +22,9 @@ Route::group(['namespace'=>'Api'],function () {
     Route::group(['namespace'=>'Auth'],function (){
         Route::post('login', 'LoginController@login');
         Route::post('register', 'RegisterController@register');
+        Route::post('reset_code', 'RegisterController@resetCode');
+        Route::post('reset_password', 'RegisterController@resetPassword');
+
     });
 
     /*
@@ -31,6 +34,7 @@ Route::group(['namespace'=>'Api'],function () {
         Route::get('product_avatar/{filename}', 'ProductsController@getProductImage');
         Route::get('vendor_avatar/{filename}', 'ShopsController@getVendorImage');
         Route::get('user_avatar/{filename}', 'ShopsController@getUserImage');
+        Route::get('rider_mode_avatar/{filename}', 'ShopsController@getRiderModeAvatar');
     });
 
     /*
@@ -89,6 +93,8 @@ Route::group(['namespace'=>'Api'],function () {
 
 
         });
+
+
 
     });
 });

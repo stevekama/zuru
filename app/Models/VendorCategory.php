@@ -13,4 +13,8 @@ class VendorCategory extends Model
     {
         return $this->hasMany(Vendor::class,'category_id','id');
     }
+
+    public function topVendors(){
+        return $this->vendors()->take(5);
+    }
 }

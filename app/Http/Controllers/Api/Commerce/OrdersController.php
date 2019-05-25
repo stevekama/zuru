@@ -10,6 +10,7 @@ use App\Models\RiderModes;
 use App\Models\RiderOrder;
 use App\Models\Vendor;
 use App\Models\VendorItem;
+use Exception;
 use function foo\func;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -35,6 +36,7 @@ class OrdersController extends Controller
         $order->id=Uuid::generate();
         $order->location = $data->location;
         $order->phone=$data->phone;
+        $order->delivery_cost=$data->distance_cost;
         $order->order_no=$this->generateOrderNo();
         $order->save();
 
@@ -96,13 +98,16 @@ class OrdersController extends Controller
     public function vendor()
     {
         $vendor = Auth::user()->vendor;
-        $orders = Order::whereHas('items.product',function ($query) use($vendor){
-            $query->where('vendor_id',$vendor->id);
-        })->with('items')->with(['items.product'=>function($query){
-            $query->withTrashed();
-        }])->get();
-        return $orders;
 
+        $orders = Order::whereHas('items.product',function ($query) use($vendor){
+            $query->where('vendor_items.vendor_id',$vendor->id);
+        })->with(['items'=>function($query)use($vendor){
+            $query->whereHas('product',function ($query)use($vendor){
+                $query->where('vendor_items.vendor_id',$vendor->id);
+            })->with('product');
+        }])->get();
+
+        return $orders;
     }
 
     public function rider()
@@ -181,6 +186,7 @@ class OrdersController extends Controller
 
         $result = ["distance"=>0,"time"=>0,"cost"=>0];
 
+        Log::warning($request->getContent());
         $data = json_decode($request->getContent());
         $riderMode = RiderModes::find($data->rider_mode);
         $items = [];
@@ -196,17 +202,22 @@ class OrdersController extends Controller
         $_start_point=["lat"=>$data->latitude,"lng"=>$data->longititude];
         foreach ($vendors as $key=>$vendor){
                 $_current_point=["lat"=>$vendor->latitude,"lng"=>$vendor->longitude];
-                try{
-                    $stat=$this->GetDrivingDistance($_start_point["lat"],
-                        $_current_point["lat"],
-                        $_start_point["lng"],
-                        $_current_point["lng"]);
-                }catch (Exception $exception){
-                    $stat=$this->getDistanceBetweenPoints($_start_point["lat"],
-                        $_current_point["lat"],
-                        $_start_point["lng"],
-                        $_current_point["lng"]);
+                if($vendor->latitude!=0 && $vendor->longitude!=0){
+                    try{
+                        $stat=$this->GetDrivingDistance($_start_point["lat"],
+                            $_current_point["lat"],
+                            $_start_point["lng"],
+                            $_current_point["lng"]);
+                    }catch (Exception $exception){
+                        $stat=$this->getDistanceBetweenPoints($_start_point["lat"],
+                            $_current_point["lat"],
+                            $_start_point["lng"],
+                            $_current_point["lng"]);
+                    }
+                }else{
+                    $stat = array('distance' => 1, 'time' => 0);
                 }
+
                 $result["distance"]+=$stat["distance"];
                 $result["time"]+=$stat["time"];
                 $_start_point=["lat"=>$vendor->latitude,"lng"=>$vendor->longitude];
@@ -214,7 +225,7 @@ class OrdersController extends Controller
         }
         $result["distance"]/=1000;
         $result["time"]/=60;
-        $result["cost"] =$result["distance"] * $riderMode->price_per_km;
+        $result["cost"] =$result["distance"]/1000 * $riderMode->price_per_km;
 
         return response()->json($result);
     }

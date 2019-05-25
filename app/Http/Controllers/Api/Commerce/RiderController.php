@@ -38,10 +38,10 @@ class RiderController extends Controller
         $this->validate($request,
             ['latitude'=>'required',
                 'longitude'=>'required']);
-        $rider = $request->all();
+        $rider = $request->except('rider_mode');
         $rider['id'] = Uuid::generate();
         $rider['user_id'] = Auth::id();
-        $rider['mode_id'] = request('mode_id');
+        $rider['mode_id'] = request('rider_mode');
 
         if($request->hasFile('license') && $request->file('license')->isValid()) {
             #requery vital data for the upload

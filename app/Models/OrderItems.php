@@ -13,4 +13,6 @@ class OrderItems extends Model
     {
         return $this->hasOne(VendorItem::class,'id','product_id');
     }
+
+
 }
