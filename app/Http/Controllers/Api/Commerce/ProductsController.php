@@ -104,4 +104,27 @@ class ProductsController extends Controller
             ['success'=>true]
         );
     }
+
+    public function getZuru()
+    {
+        $p = VendorItem::withCount('purchases')->orderBy('purchases_count', 'desc')
+            ->get();
+        return response()->json($p);
+    }
+
+    public function getHighestRated()
+    {
+        $p = VendorItem::orderBy('rating', 'desc')
+            ->limit(5)
+            ->get();
+        return response()->json($p);
+    }
+
+    public function getHighestPurchase()
+    {
+        $p = VendorItem::withCount('purchases')->orderBy('purchases_count', 'desc')
+            ->limit(5)
+            ->get();
+        return response()->json($p);
+    }
 }

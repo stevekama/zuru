@@ -35,6 +35,11 @@ Route::group(['namespace'=>'Api'],function () {
         Route::get('vendor_avatar/{filename}', 'ShopsController@getVendorImage');
         Route::get('user_avatar/{filename}', 'ShopsController@getUserImage');
         Route::get('rider_mode_avatar/{filename}', 'ShopsController@getRiderModeAvatar');
+
+
+        Route::get('search', 'ShopsController@getSearch');
+
+
     });
 
     /*
@@ -90,6 +95,14 @@ Route::group(['namespace'=>'Api'],function () {
             });
 
             Route::get('account', 'AccountController@getUserAccount');
+            Route::get('account', 'AccountController@getUserAccount');
+
+
+            #Filtered products endpoints
+            Route::get('zuru', 'ProductsController@getZuru');
+            Route::get('highest_rated', 'ProductsController@getHighestRated');
+            Route::get('highest_purchase', 'ProductsController@getHighestPurchase');
+
 
 
         });

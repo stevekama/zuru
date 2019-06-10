@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Commerce;
 use App\Models\ResetCode;
 use App\Models\Vendor;
 use App\Models\VendorCategory;
+use App\Models\VendorItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -160,5 +161,15 @@ class ShopsController extends Controller
                 ->get();
         }
         return response()->json($data);
+    }
+
+
+    public function getSearch(Request $request)
+    {
+
+        $products = VendorItem::where('name', 'like', '%' . Input::get('query') . '%')
+            ->get();
+
+        return response()->json($products);
     }
 }

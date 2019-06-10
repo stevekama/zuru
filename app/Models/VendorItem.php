@@ -24,4 +24,9 @@ class VendorItem extends Model
     {
         return $this->vendor()->select('shop_name')->pluck('shop_name')[0];
     }
+
+    public function purchases()
+    {
+        return $this->hasMany(OrderItems::class,'product_id','id');
+    }
 }
