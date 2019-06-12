@@ -15,7 +15,7 @@ class MpesaController extends Controller
     {
         if($request->has('key') && request('key')=="Fpe1kFh8zgjoCqAVSEF7l0CKfpHonmgj"){
 
-            $data = json_decode(file_get_contents('php://input'), true);
+            $data = $request->json()->all();
 
             Log::warning($data);
             /*
