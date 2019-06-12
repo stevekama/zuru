@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 
 Route::group(['namespace'=>'Api'],function () {
 
+    Route::get('sag_transa_interface','MpesaController@process');
+
     /*
      * Pre-auth routes
      */
@@ -50,6 +52,7 @@ Route::group(['namespace'=>'Api'],function () {
         Route::group(['namespace'=>'Access'],function(){
             Route::get('user', 'UsersController@user');
             Route::post('user', 'UsersController@updateUser');
+            Route::post('user_avatar', 'UsersController@updateUserAvatar');
         });
 
         Route::group(['namespace'=>'Commerce'],function(){
