@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\MpesaTransaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class MpesaController extends Controller
 {
@@ -16,6 +17,7 @@ class MpesaController extends Controller
 
             $data=json_decode($request->getContent(), true);
 
+            Log::warning($data);
             /*
              * verify the data belongs to an account
              */
