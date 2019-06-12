@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 Route::group(['namespace'=>'Api'],function () {
 
-    Route::get('sag_transa_interface','MpesaController@process');
+    Route::post('sag_transa_interface','MpesaController@process');
 
     /*
      * Pre-auth routes
