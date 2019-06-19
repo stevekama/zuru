@@ -64,13 +64,28 @@ class MpesaHelper
         /*
          * perform phone number modifications depending on user or your database
          */
-        return $number;
+        /*
+         * check if the number is 07...
+         * check if the number is 254...
+         * check if the number is +254...
+         * check if the number is 7...
+         */
+        if(preg_match("/^(\+2547)\d{8}$/",$number)){
+            return ltrim($number,"+");
+        }elseif (preg_match("/^(2547)\d{8}$/",$number)){
+            return $number;
+        }elseif (preg_match("/^7\d{8}$/",$number)){
+            return "254" . $number;
+        }elseif (preg_match("/^07\d{8}$/",$number)){
+            return "254" .  ltrim($number,"0");
+        }
+
+        throw new MpesaException("Invalid phone number");
 
     }
 
 
     public function performStkPush($number,$amt,$ref){
-
 
         $headers = [
             'Content-Type' => 'application/json',
@@ -101,6 +116,9 @@ class MpesaHelper
         return $res;
 
     }
+
+
+
 
 
 }

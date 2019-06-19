@@ -64,6 +64,18 @@ class ProductsController extends Controller
 
     }
 
+    public function updateQty(VendorItem $product,$qty)
+    {
+        $product->qty+=$qty;
+        $product->save();
+
+        return response()->json([
+            'success'=>true,
+            'message'=>'Quantity updated successfully'
+        ]);
+
+    }
+
     public function fetch($product)
     {
         return response()->json(VendorItem::find($product));
@@ -74,6 +86,22 @@ class ProductsController extends Controller
         $_vendor = Vendor::find($vendor);
         return response()->json($_vendor->products);
 
+    }
+
+    public function rateProduct(VendorItem $product,$rating)
+    {
+        $new_rating = ($product->rating+$rating)/2;
+        $product->rating = $new_rating;
+
+        return response()->json([
+            'success'=>true
+        ]);
+    }
+
+    public function outOfStock($vendor)
+    {
+        $_vendor = Vendor::find($vendor);
+        return response()->json($_vendor->products()->where('qty',0)->get());
     }
 
     public function availability(Request $request)

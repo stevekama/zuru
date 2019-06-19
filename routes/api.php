@@ -69,7 +69,14 @@ Route::group(['namespace'=>'Api'],function () {
             Route::get('user_rider', 'RiderController@getUserRider');
 
             #create or update customer
+            Route::get('stats', 'StatsController@getGeneralStats');
+            Route::get('earnings', 'StatsController@earnings');
+            Route::get('selling_stats', 'StatsController@sellingStats');
+
+            #Stats management routes
             Route::get('self_customer', 'CustomerController@getSelfCustomer');
+
+
 
             #Endpoint to get all shops
             Route::get('shops', 'ShopsController@getShops');
@@ -80,8 +87,11 @@ Route::group(['namespace'=>'Api'],function () {
 
             #products create or update
             Route::get('product/{product}', 'ProductsController@fetch');
+            Route::get('rate/{product}/{rating}', 'ProductsController@rateProduct');
             Route::get('shop_products/{vendor}', 'ProductsController@shopProducts');
+            Route::get('out_of_stock/{vendor}', 'ProductsController@outOfStock');
             Route::post('product', 'ProductsController@store');
+            Route::get('product_qty/{product}/{qty}', 'ProductsController@updateQty');
             Route::post('product_availability', 'ProductsController@availability');
             Route::post('delete_product', 'ProductsController@deleteProduct');
 
@@ -97,6 +107,7 @@ Route::group(['namespace'=>'Api'],function () {
                 Route::post('/accept_customer/{order}', 'OrdersController@acceptCustomer');
             });
 
+
             Route::get('account', 'AccountController@getUserAccount');
             Route::get('account', 'AccountController@getUserAccount');
 
@@ -110,6 +121,12 @@ Route::group(['namespace'=>'Api'],function () {
 
         });
 
+
+
+        #Wallet control routes
+        Route::group(['namespace'=>'Wallet'],function (){
+            Route::post('/top_up', 'TransactionsController@topUp');
+        });
 
 
     });
