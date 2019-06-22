@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Account;
 use App\Models\MpesaTransaction;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Log;
+use Webpatser\Uuid\Uuid;
 
 class MpesaController extends Controller
 {
@@ -35,11 +37,23 @@ class MpesaController extends Controller
             if($account!=null){
                 $account->balance+=$data['TransAmount'];
                 $account->save();
+
+
+                $trans_data = [
+                    'account_id'=>$account->id,
+                    'id'=>Uuid::generate()->string,
+                    'amount'=>$data['TransAmount'],
+                    'type'=>1
+                ];
+                Transaction::create($trans_data);
             }
 
             /*
              *TODO Dispatch event to firebase for this account update
              */
+
+
+
 
             $response=[
                 'ResultCode'=>0,

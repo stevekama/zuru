@@ -127,6 +127,7 @@ Route::group(['namespace'=>'Api'],function () {
         #Wallet control routes
         Route::group(['namespace'=>'Wallet'],function (){
             Route::post('/top_up', 'TransactionsController@topUp');
+            Route::post('/withdraw', 'TransactionsController@withdraw');
         });
 
 

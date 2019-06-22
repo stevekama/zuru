@@ -73,6 +73,20 @@ class ShopsController extends Controller
             $vendor['avatar'] = $filename;
 
         }
+
+        if($request->hasFile('idfile') && $request->file('idfile')->isValid()) {
+            #requery vital data for the upload
+            $image = Input::file('idfile');
+            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+            $path = public_path('files/vendors/');
+            #create path if it does not exist and move the trimmed file
+            if (!File::exists($path)) {
+                File::makeDirectory($path, $mode = 0777, true, true);
+            }
+            Image::make($image->getRealPath())->fit(500, 500)->save($path . $filename);
+            $vendor['idfile'] = $filename;
+        }
+
         $vendor['id'] = Uuid::generate();
         $vendor['user_id'] = Auth::id();
         Vendor::createOrUpdateExcept(['user_id'=>Auth::id()],$vendor,['id']);
