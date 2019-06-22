@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Account;
 use App\Models\MpesaTransaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,13 +18,28 @@ class MpesaController extends Controller
 
             $data = $request->json()->all();
 
-            Log::warning($data);
             /*
              * verify the data belongs to an account
              */
 
             MpesaTransaction::create($data);
 
+            /*
+             * increase corresponding wallet
+             */
+
+            $_data = explode("-",$data['BillRefNumber']);
+            $account = Account::where('sequence_one',$_data[0])
+                ->where('sequence_four',$_data[1])
+                ->first();
+            if($account!=null){
+                $account->balance+=$data['TransAmount'];
+                $account->save();
+            }
+
+            /*
+             *TODO Dispatch event to firebase for this account update
+             */
 
             $response=[
                 'ResultCode'=>0,

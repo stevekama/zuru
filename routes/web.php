@@ -54,6 +54,13 @@ Route::group(['namespace'=>'Backend','prefix'=>'administration','as'=>'backend.'
         Route::get('edit/{riderModes}','RiderModesController@edit')->name('edit');
     });
 
+    #Transactions management routes
+    Route::group(['as'=>'transactions.'],function (){
+        Route::get('users','TransactionsController@users')->name('users');
+        Route::get('withdrawals','TransactionsController@withdrawals')->name('withdrawals');
+        Route::get('mpesa','TransactionsController@mpesa')->name('mpesa');
+    });
+
     Route::group(['as'=>'roles.','prefix'=>'roles','middleware'=>'permission:read-roles'],function (){
         Route::get('list','AccessController@list')->name('list');
         Route::get('create','AccessController@creteRole')->name('create');

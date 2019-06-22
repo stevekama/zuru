@@ -20,6 +20,7 @@ class VendorItem extends Model
     {
         return $this->hasOne(Vendor::class,'id','vendor_id');
     }
+
     public function getShopAttribute()
     {
         return $this->vendor()->select('shop_name')->pluck('shop_name')[0];

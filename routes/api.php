@@ -37,6 +37,7 @@ Route::group(['namespace'=>'Api'],function () {
         Route::get('vendor_avatar/{filename}', 'ShopsController@getVendorImage');
         Route::get('user_avatar/{filename}', 'ShopsController@getUserImage');
         Route::get('rider_mode_avatar/{filename}', 'ShopsController@getRiderModeAvatar');
+        Route::get('category_avatar/{filename}', 'ShopsController@getCategoryAvatar');
 
 
         Route::get('search', 'ShopsController@getSearch');
@@ -68,12 +69,12 @@ Route::group(['namespace'=>'Api'],function () {
             Route::get('rider_modes', 'RiderController@riderModes');
             Route::get('user_rider', 'RiderController@getUserRider');
 
-            #create or update customer
+            #Statistics routes
             Route::get('stats', 'StatsController@getGeneralStats');
             Route::get('earnings', 'StatsController@earnings');
             Route::get('selling_stats', 'StatsController@sellingStats');
 
-            #Stats management routes
+            #customer management routes
             Route::get('self_customer', 'CustomerController@getSelfCustomer');
 
 

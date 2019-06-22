@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Backend;
 use App\Models\VendorCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\View;
+use Intervention\Image\Facades\Image;
 
 class VendorCategoriesController extends Controller
 {
@@ -26,7 +29,8 @@ class VendorCategoriesController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name'=>'required|unique:vendor_categories'
+            'name'=>'required_without:id',
+            'avatar'=>'required_without:id'
         ]);
 
         if($validator->fails()){
@@ -39,9 +43,28 @@ class VendorCategoriesController extends Controller
             $cat  =new VendorCategory();
         }
 
+
+        /*
+         * upload avatar if possible
+         */
+
+        if($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+            #requery vital data for the upload
+            $image = Input::file('avatar');
+            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+            $path = public_path('files/categories/');
+            #create path if it does not exist and move the trimmed file
+            if (!File::exists($path)) {
+                File::makeDirectory($path, $mode = 0777, true, true);
+            }
+            Image::make($image->getRealPath())->fit(500, 500)->save($path . $filename);
+            $cat->avatar = $filename;
+
+        }
+
         $cat->name = request('name');
         $cat->save();
-        return back();
+        return redirect()->route('backend.vendor_categories.list');
     }
 
     public function create()

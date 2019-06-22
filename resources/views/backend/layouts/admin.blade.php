@@ -372,6 +372,19 @@
                         <li><a href="{{route('backend.users.admins')}}"><i class="fa fa-circle-o"></i>Administrators</a></li>
                     </ul>
                 </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-users"></i>
+                        <span>Transactions</span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{route('backend.transactions.users')}}"><i class="fa fa-circle-o"></i>Users Transactions</a></li>
+                        <li><a href="{{route('backend.transactions.withdrawals')}}"><i class="fa fa-circle-o"></i>Withdrawala</a></li>
+                        <li><a href="{{route('backend.transactions.mpesa')}}"><i class="fa fa-circle-o"></i> Mpesa transactions</a></li>
+                    </ul>
+                </li>
+
                 <li>
                     <a href="{{route('backend.vendor_categories.list')}}">
                         <i class="fa fa-th"></i> <span>Vendor categories</span>

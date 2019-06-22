@@ -9,6 +9,7 @@ class Order extends Model
 {
     //
     public $incrementing = false;
+    protected $appends = array('buyer');
 
 
     public function items()
@@ -19,6 +20,11 @@ class Order extends Model
     public function buyer()
     {
         return $this->hasOne(User::class,'id','user_id');
+    }
+
+    public function getBuyerAttribute()
+    {
+        return $this->buyer()->select('name')->pluck('name')[0];
     }
 
     public function rides()

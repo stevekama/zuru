@@ -15,6 +15,7 @@ use function foo\func;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Webpatser\Uuid\Uuid;
@@ -89,6 +90,11 @@ class OrdersController extends Controller
     public function customer()
     {
         return response()->json(Order::where('user_id',Auth::id())->with(['items'])
+            ->withCount([
+                'items AS total' => function ($query) {
+                    $query->select(DB::raw("SUM(selling_price*qty) as total"));
+                }
+            ])
             ->with(['items.product'=>function($query){
                 $query->withTrashed();
             }])
@@ -101,7 +107,13 @@ class OrdersController extends Controller
 
         $orders = Order::whereHas('items.product',function ($query) use($vendor){
             $query->where('vendor_items.vendor_id',$vendor->id);
-        })->with(['items'=>function($query)use($vendor){
+        })
+            ->withCount([
+                'items AS total' => function ($query) {
+                    $query->select(DB::raw("SUM(selling_price*qty) as total"));
+                }
+            ])
+            ->with(['items'=>function($query)use($vendor){
             $query->whereHas('product',function ($query)use($vendor){
                 $query->where('vendor_items.vendor_id',$vendor->id);
             })->with('product');
@@ -121,6 +133,11 @@ class OrdersController extends Controller
         $orders = Order::join('rider_orders','orders.id','=','rider_orders.order_id')
             ->join('riders','rider_orders.rider_id','riders.id')
             ->select('orders.*')
+            ->withCount([
+                'items AS total' => function ($query) {
+                    $query->select(DB::raw("SUM(selling_price*qty) as total"));
+                }
+            ])
             ->with(['items'=>function($query){
                 $query->with(['product'=>function($query){
                         $query->withTrashed();

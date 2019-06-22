@@ -16,13 +16,24 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <form action="{{route('backend.vendor_categories.store')}}" method="post">
+                    <form enctype="multipart/form-data" action="{{route('backend.vendor_categories.store')}}" method="post">
                         @csrf
-                        <input type="hidden" name="id" value="{{old('id')}}"></input>
-                        <div class="form-group">
-                            <label for="">Category name</label>
-                            <input type="text" name="name" value="{{old('name')}}" class="form-control">
-                            <span class="text-danger">{{($errors->has('name'))?$errors->first('name'):""}}</span>
+                        <input type="hidden" name="id" value="{{old('id')}}">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="">Category name</label>
+                                    <input type="text" name="name" value="{{old('name')}}" class="form-control">
+                                    <span class="text-danger">{{($errors->has('name'))?$errors->first('name'):""}}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="">Avatar</label>
+                                    <input type="file" name="avatar" class="form-control">
+                                    <span class="text-danger">{{($errors->has('avatar'))?$errors->first('avatar'):""}}</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <input type="submit" value="update" class="btn btn-primary">

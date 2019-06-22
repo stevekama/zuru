@@ -20,6 +20,7 @@
                         <thead>
                         <tr>
                             <th>#</th>
+                            <th>Avatar</th>
                             <th>Name</th>
                             <th>No Vendors</th>
                             <th>Action</th>
@@ -29,6 +30,7 @@
                         @foreach($categories as $category)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
+                                <td><img width="100px" class="img-thumbnail" src="{{asset('files/categories/' . $category->avatar)}}" alt=""></td>
                                 <td>{{$category->name}}</td>
                                 <td>
                                     <span class="badge bg-info">

@@ -28,14 +28,21 @@ class ShopsController extends Controller
     public function getRiderModeAvatar($filename)
     {
         $path = public_path('files/rider_modes/' . $filename);
-        return \response()->download($path);
+        return response()->download($path);
     }
 
     public function getUserImage($filename)
     {
         $path = public_path('files/users/' . $filename);
-        return \response()->download($path);
+        return response()->download($path);
     }
+
+    public function getCategoryAvatar($filename)
+    {
+        $path = public_path('files/categories/' . $filename);
+        return response()->download($path);
+    }
+
 
     public function createVendor(Request $request)
     {
