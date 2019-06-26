@@ -21,15 +21,20 @@
                         <tr>
                             <th>#</th>
                             <th>Amount</th>
-                            <th>User</th>
+                            <th>Account no</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($transactions as $transaction)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{$transaction->amount}}</td>
-                                <td>{{$transaction->user->name}}</td>
+                                <td>KSH. {{number_format($transaction->amount,2)}}</td>
+                                <td>
+                                    @if($transaction->account!=null)
+                                        @php($acc = $transaction->account)
+                                            {{$acc->sequence_one . "-" . $acc->sequence_two . "-" . $acc->sequence_three . "-" . $acc->sequence_four}}
+                                        @endif
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

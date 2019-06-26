@@ -29,12 +29,20 @@ class OrdersController extends Controller
         $data = json_decode($request->getContent());
         Log::warning($request->getContent());
 
+        $user = Auth::user();
+
+        if($user->account==null){
+            return response()->json([
+                'success'=>false
+            ]);
+        }
+
         /*
          * Create an order record
          */
         $order = new Order();
         $order->user_id = Auth::id();
-        $order->id=Uuid::generate();
+        $order->id=Uuid::generate()->string;
         $order->location = $data->location;
         $order->phone=$data->phone;
         $order->delivery_cost=$data->distance_cost;
@@ -51,9 +59,8 @@ class OrdersController extends Controller
             OrderItems::create($order_item);
         }
 
-        $order = Order::first();
 
-        $this->dispatch(new NotifyRidersForOrder($order));
+        $this->dispatch(new NotifyRidersForOrder($order->id));
 
         return response()->json([
             'success'=>true
@@ -144,6 +151,25 @@ class OrdersController extends Controller
                 }]);
             }])
             ->where('riders.user_id',Auth::id())
+            ->get();
+
+        return response()->json($orders);
+    }
+
+
+    public function pending()
+    {
+        $orders = Order::select('orders.*')
+            ->withCount([
+                'items AS total' => function ($query) {
+                    $query->select(DB::raw("SUM(selling_price*qty) as total"));
+                }
+            ])
+            ->with(['items'=>function($query){
+                $query->with(['product'=>function($query){
+                    $query->withTrashed();
+                }]);
+            }])
             ->get();
 
         return response()->json($orders);

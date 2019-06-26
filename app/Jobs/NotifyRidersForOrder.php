@@ -53,11 +53,11 @@ class NotifyRidersForOrder implements ShouldQueue
 
         }
 
-        $order=Order::find($this->order->id);
-        $vendors=$order->vendors();
+        $data=['order_id'=>$this->order];
 
-        $this->order->vendors=$vendors;
 
-        Log::info($helper->sendMessage($this->order,$tags,"Zuru orders","An order is ready for pick up"));
+
+
+        Log::info($helper->sendMessage($data,$tags,"Zuru orders","An order is ready for pick up"));
     }
 }

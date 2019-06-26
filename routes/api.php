@@ -102,6 +102,7 @@ Route::group(['namespace'=>'Api'],function () {
                 Route::get('/customer', 'OrdersController@customer');
                 Route::post('/calculate_price', 'OrdersController@calculatePrice');
                 Route::get('/rider', 'OrdersController@rider');
+                Route::get('/pending', 'OrdersController@pending');
                 Route::get('/vendor', 'OrdersController@vendor');
                 Route::post('/accept/{order}', 'OrdersController@accept');
                 Route::post('/rate/{order}', 'OrdersController@rate');
