@@ -28,9 +28,8 @@
                         @foreach($transactions as $transaction)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{$transaction->amount}}</td>
-                                <td>{{$transaction->user->name}}</td>
-
+                                <td>{{number_format($transaction->amount,2)}}</td>
+                                <td>{{($transaction->user==null)?"":$transaction->user->name}}</td>
                             </tr>
                         @endforeach
                         </tbody>

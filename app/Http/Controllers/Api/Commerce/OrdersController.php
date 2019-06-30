@@ -27,15 +27,34 @@ class OrdersController extends Controller
     {
 
         $data = json_decode($request->getContent());
-        Log::warning($request->getContent());
 
         $user = Auth::user();
 
         if($user->account==null){
             return response()->json([
-                'success'=>false
+                'success'=>false,
+                'message'=>"You do not have a zuru wallet yet. Create one under your profile"
             ]);
         }
+
+        /*
+         * get the total price of the order and consider if the account
+         */
+        $_price = collect($data->products_in_cart)->sum(function ($value){
+            $item = VendorItem::where('id',$value->id)->select('price')->first();
+            return $item->price*$value->quantity;
+        });
+        $_price+=$data->distance_cost;
+
+
+//        if($user->account->balance < $_price){
+//            return response()->json([
+//                'success'=>false,
+//                'message'=>"Your balance is not enough to cover the order, please top up " . ($_price-$user->account->balance)
+//            ]);
+//        }
+
+
 
         /*
          * Create an order record
