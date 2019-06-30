@@ -189,6 +189,7 @@ class OrdersController extends Controller
                     $query->withTrashed();
                 }]);
             }])
+            ->where('status',0)
             ->get();
 
         return response()->json($orders);
