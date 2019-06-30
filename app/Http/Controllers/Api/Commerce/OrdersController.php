@@ -47,12 +47,12 @@ class OrdersController extends Controller
         $_price+=$data->distance_cost;
 
 
-//        if($user->account->balance < $_price){
-//            return response()->json([
-//                'success'=>false,
-//                'message'=>"Your balance is not enough to cover the order, please top up " . ($_price-$user->account->balance)
-//            ]);
-//        }
+        if($user->account->balance < $_price){
+            return response()->json([
+                'success'=>false,
+                'message'=>"Your balance is not enough to cover the order, please top up " . ($_price-$user->account->balance)
+            ]);
+        }
 
 
 

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="101591a3-f7c2-4bda-b37d-a3508ebe9fb9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/Commerce/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/Commerce/OrdersController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -85,8 +84,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/Commerce/OrdersController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="191" column="30" selection-start-line="191" selection-start-column="30" selection-end-line="191" selection-end-column="30" />
+            <state relative-caret-position="161">
+              <caret line="49" selection-start-line="49" selection-end-line="54" selection-end-column="9" />
               <folding>
                 <element signature="e#53#87#0#PHP" expanded="true" />
               </folding>
@@ -128,6 +127,7 @@
       <find>rate</find>
       <find>order_i</find>
       <find>products_in_cart</find>
+      <find>pendi</find>
     </findStrings>
     <replaceStrings>
       <replace>td</replace>
@@ -620,12 +620,12 @@
       <workItem from="1561656938321" duration="992000" />
       <workItem from="1561697880502" duration="148000" />
       <workItem from="1561821668145" duration="1443000" />
-      <workItem from="1561893684654" duration="6392000" />
+      <workItem from="1561893684654" duration="6590000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="237526000" />
+    <option name="totallyTimeSpent" value="237724000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="30" width="1366" height="738" extended-state="6" />
@@ -1038,8 +1038,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/Commerce/OrdersController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="191" column="30" selection-start-line="191" selection-start-column="30" selection-end-line="191" selection-end-column="30" />
+        <state relative-caret-position="161">
+          <caret line="49" selection-start-line="49" selection-end-line="54" selection-end-column="9" />
           <folding>
             <element signature="e#53#87#0#PHP" expanded="true" />
           </folding>
