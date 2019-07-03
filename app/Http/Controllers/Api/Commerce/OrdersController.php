@@ -8,6 +8,7 @@ use App\Models\OrderItems;
 use App\Models\Rider;
 use App\Models\RiderModes;
 use App\Models\RiderOrder;
+use App\Models\Transaction;
 use App\Models\Vendor;
 use App\Models\VendorItem;
 use Exception;
@@ -54,7 +55,17 @@ class OrdersController extends Controller
             ]);
         }
 
+        $account = $user->account;
+        $account->balance-=$_price+$data->distance_cost;
+        $account->save();
 
+        $trans_data = [
+            'account_id'=>$account->id,
+            'id'=>Uuid::generate()->string,
+            'amount'=>$_price+$data->distance_cost,
+            'type'=>0
+        ];
+        Transaction::create($trans_data);
 
         /*
          * Create an order record
@@ -242,6 +253,14 @@ class OrdersController extends Controller
         return response()->json([
             'success'=>true
         ]);
+    }
+
+
+    public function getVendors(Order $task)
+    {
+        $items = $task->items()->with('product')->with('product.vendor')->get()->pluck('product.vendor');
+
+        return response()->json($items);
     }
 
     public function calculatePrice(Request $request)
