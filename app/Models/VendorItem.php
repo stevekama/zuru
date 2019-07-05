@@ -23,7 +23,7 @@ class VendorItem extends Model
 
     public function getShopAttribute()
     {
-        if($this->vendor()!=null){
+        if($this->vendor!=null){
             return $this->vendor()->select('shop_name')->pluck('shop_name')[0];
 
         }else{
