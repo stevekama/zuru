@@ -143,7 +143,8 @@ class ProductsController extends Controller
     public function getHighestRated()
     {
         $p = VendorItem::orderBy('rating', 'desc')
-            ->take(5)
+            ->skip(0)
+            ->limit(5)
             ->get();
         return response()->json($p);
     }
@@ -151,7 +152,8 @@ class ProductsController extends Controller
     public function getHighestPurchase()
     {
         $p = VendorItem::withCount('purchases')->orderBy('purchases_count', 'desc')
-            ->take(5)
+            ->skip(0)
+            ->limit(5)
             ->get();
         return response()->json($p);
     }
