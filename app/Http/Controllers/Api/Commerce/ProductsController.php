@@ -142,28 +142,17 @@ class ProductsController extends Controller
 
     public function getHighestRated()
     {
-        if(VendorItem::count()<5){
-            $p = VendorItem::orderBy('rating', 'desc')
-                ->get();
-        }else{
-            $p = VendorItem::orderBy('rating', 'desc')
-                ->limit(5)
-                ->get();
-        }
-
+        $p = VendorItem::orderBy('rating', 'desc')
+            ->limit(5)
+            ->get();
         return response()->json($p);
     }
 
     public function getHighestPurchase()
     {
-        if(VendorItem::count()<5){
-            $p = VendorItem::withCount('purchases')->orderBy('purchases_count', 'desc')
-                ->get();
-        }else{
-            $p = VendorItem::withCount('purchases')->orderBy('purchases_count', 'desc')
-                ->limit(5)
-                ->get();
-        }
+        $p = VendorItem::has('purchases')->withCount('purchases')->orderBy('purchases_count', 'desc')
+            ->limit(5)
+            ->get();
         return response()->json($p);
     }
 }
