@@ -127,19 +127,7 @@ class ShopsController extends Controller
                 }]);
             });
         }else{
-            $coordinates =(object)["latitude"=> 0.3461277,"longitude"=>34.4909154];
-            $haversine = "(6371 * acos(cos(radians($coordinates->latitude)) * cos(radians(latitude)) * cos(radians(longitude) - radians($coordinates->longitude)) + sin(radians($coordinates->latitude)) * sin(radians(latitude))))";
-
-
-            $data = VendorCategory::get();
-            $data->each(function($user) use ($haversine,$radius){
-                $user->load(['topVendors'=>function($query)use ($haversine,$radius){
-                    $query->select('vendors.*')->selectRaw("{$haversine} AS distance")
-                    ->whereRaw("{$haversine} < ?", [$radius]);
-
-
-                }]);
-            });
+            return [];
         }
 
 
