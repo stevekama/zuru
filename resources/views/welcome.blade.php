@@ -138,7 +138,7 @@
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-8 mx-auto text-center">
-                            <img src="{{ asset('img/device-2019-05-20-071345.png') }}" alt="" class="img-fluid">
+                            <img src="{{ asset('img/device-2019-08-24-162725.png') }}" alt="" class="img-fluid">
                             <br>
                             <h4 class="bold_font">Get the app on playstore</h4>
                             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Get_it_on_Google_play.svg/1280px-Get_it_on_Google_play.svg.png" alt="" width="150px">
