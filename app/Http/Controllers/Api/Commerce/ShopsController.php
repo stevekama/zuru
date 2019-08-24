@@ -123,11 +123,13 @@ class ShopsController extends Controller
             $data->each(function($user) use ($haversine,$radius){
                 $user->load(['topVendors'=>function($query)use ($haversine,$radius){
                     $query->select('vendors.*')->selectRaw("{$haversine} AS distance")
-                        ->whereRaw("{$haversine} < ?", [$radius]);
+                        ->whereRaw("{$haversine} < ?", [$radius])
+                    ->whereRaw("{$haversine} > ?", 0);
+
                 }]);
             });
         }else{
-            return [];
+            $data =  [];
         }
 
 
@@ -137,7 +139,7 @@ class ShopsController extends Controller
 
     public function getCategoryShops(Request $request,VendorCategory $category)
     {
-        $radius = 50;
+        $radius = 25;
 
 
         if($request->has('latitude') && $request->input('latitude')!=0){
@@ -147,16 +149,12 @@ class ShopsController extends Controller
             $data = Vendor::where('category_id',$category->id)
                 ->select('vendors.*')->selectRaw("{$haversine} AS distance")
                 ->whereRaw("{$haversine} < ?", [$radius])
+                ->whereRaw("{$haversine} > ?", 0)
             ->get();
 
 
         }else{
-            $coordinates =(object)["latitude"=> 0.3461277,"longitude"=>34.4909154];
-            $haversine = "(6371 * acos(cos(radians($coordinates->latitude)) * cos(radians(latitude)) * cos(radians(longitude) - radians($coordinates->longitude)) + sin(radians($coordinates->latitude)) * sin(radians(latitude))))";
-
-            $data = Vendor::where('category_id',$category->id)
-                ->select('vendors.*')->selectRaw("{$haversine} AS distance")
-                ->get();
+            $data = [];
         }
         return response()->json($data);
     }
