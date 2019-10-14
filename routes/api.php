@@ -132,6 +132,5 @@ Route::group(['namespace'=>'Api'],function () {
             Route::post('/withdraw', 'TransactionsController@withdraw');
         });
 
-
     });
 });
